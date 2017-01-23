@@ -13,13 +13,91 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
+  	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.3.RELEASE</version>
+		<relativePath />
+	</parent>
 
   <dependencies>
+  
+	<!-- Spring Boot  -->  
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter</artifactId>
+		<exclusions>
+	        <exclusion>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-starter-logging</artifactId>
+	        </exclusion>
+    	</exclusions>
+  	</dependency>
+  	
+  	<!-- Spring log4 logging -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-log4j</artifactId>
+	    <version>1.2.8.RELEASE</version>
+	</dependency>
+	
+	
+	<!-- Spring boot security -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-security</artifactId>
+	</dependency>
+	
+	<!--  Spring boot Thymeleaf -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-thymeleaf</artifactId>
+	</dependency>
+	
+	<!-- Spring Web MVC -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-web</artifactId>
+	</dependency>
+	
+	<!--  Spring Data -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-data-jpa</artifactId>
+	</dependency>
+	
+	<!--  MySQL driver -->
+	<dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>6.0.5</version>
+	</dependency>
+	
+	  <!-- lombok -->
+    <dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	
+  	<!--  JUNIT  -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+   
   </dependencies>
+	
+  <!-- Spring Boot Plugin for creating JAR/WAR files -->
+  <build>
+	<plugins>
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+		</plugin>
+	</plugins>
+   </build>
+
 </project>
