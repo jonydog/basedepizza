@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/home")
 public class HomeController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+	private Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	
 	@RequestMapping(method = RequestMethod.GET)
