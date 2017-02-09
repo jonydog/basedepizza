@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EntityScan({"com.jpinto.basedepizza.model"})
 @EnableJpaRepositories({"com.jpinto.basedepizza.daos"})	
-@ComponentScan({ "com.jpinto.basedepizza", "com.jpinto.basedepizza.business", "com.jpinto.basedepizza.controllers" })
+@ComponentScan({ "com.jpinto.basedepizza", "com.jpinto.basedepizza.business", "com.jpinto.basedepizza.controllers", "com.jpinto.basedepizza.restcontrollers" })
 public class WebApp {
 
 	public static void main(String args[]){
