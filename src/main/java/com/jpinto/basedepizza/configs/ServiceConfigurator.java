@@ -1,6 +1,9 @@
-package com.jpinto.basedepizza;
+package com.jpinto.basedepizza.configs;
 
 import javax.sql.DataSource;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,12 +12,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 
-import com.jpinto.basedepizza.business.SimpleUserService;
-import com.jpinto.basedepizza.business.interfaces.UserService;
-
 @Configuration
 @PropertySource("classpath:application.properties")
 public class ServiceConfigurator {
+	
+	
 
 	@ConfigurationProperties(prefix = "spring.datasource")
 	@Bean
@@ -26,9 +28,11 @@ public class ServiceConfigurator {
 	}
 	
 	@Bean
-	public UserService userService(){
-		return new SimpleUserService();
+	public Validator entityValidator(){
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		return factory.getValidator();
 	}
+
 	
 /*	@Bean
 	@Autowired

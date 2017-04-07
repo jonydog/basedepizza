@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jpinto.basedepizza.business.interfaces.UserService;
 import com.jpinto.basedepizza.model.User;
-import com.jpinto.basedepizza.utils.ServiceResult;
 
 @Controller
 @Scope("session")
@@ -43,15 +44,15 @@ public class RegisterController {
 		this.user.setUsername(registerForm.getName());
 		this.user.setPassword(registerForm.getPassword());
 		this.user.setPhone(registerForm.getPhone());
-		ServiceResult<Boolean> serviceResult = userService.registerNewUser(user, registerForm.getConfirmPassword() );
+		
+		Errors errors = new BeanPropertyBindingResult(this.user, "user");
+		userService.registerNewUser(user, registerForm.getConfirmPassword() , errors);
 
-		if(serviceResult.isSuccess()) {
+		if(errors.hasErrors() == false ) {
 			this.logger.warn("Register success!");
 			return "redirect:login";
 		} else {
-			String errorMessage = serviceResult.getMessage();
-			m.addAttribute("errors", errorMessage);
-			this.logger.warn("Register failed..." + errorMessage );
+			this.logger.warn("Register failed..." );
 			return "register";
 		} 
 	}

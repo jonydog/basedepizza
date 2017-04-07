@@ -7,9 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,26 +26,24 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	private String username;
 
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	private String password;
 
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	private String email;
 
 	@Size(max = 255)
 	private String phone;
 	
-	
 	public User(){
 		
 	}
-
 
 	public User(String username, String email, String phone, String password) {
 		super();
