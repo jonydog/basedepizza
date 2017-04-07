@@ -42,18 +42,23 @@ public class OrderServiceImpl  implements OrderService{
 	private IngredientDAO ingredientDao;
 	
 	@Override
-	public Order newOrder(User user) {
+	public Order newOrder(User user, Errors errors) {
 		Order order = new Order();
 		order.setOrderOwner(user);
 		Date date = new Date();
 		order.setOrderStartingDate(date);
 		order.setPrice(0.0f);
 		
-		this.userDao.save(user);
 		
 		List<Pizza> pizzas = new ArrayList<>();
 		order.setPizzas(pizzas);
 		order.setFinished(false);
+		
+		Set<ConstraintViolation<Order>> violationsOrder= this.entityValidator.validate(order);
+		ToErrorsAdapter.toErrors(violationsOrder, order, errors);		
+		if(errors.hasErrors()){
+			return null;
+		}	
 		this.orderDao.save(order);
 	
 		
@@ -90,6 +95,12 @@ public class OrderServiceImpl  implements OrderService{
 	
 		pizzaInitial.setIngredients(ingredients);
 		pizzas.add(pizzaInitial);
+		
+		Set<ConstraintViolation<Order>> violationsPizza= this.entityValidator.validate(order);
+		ToErrorsAdapter.toErrors(violationsPizza, order, errors);		
+		if(errors.hasErrors()){
+			return;
+		}	
 		
 		this.pizzaDao.save(pizzaInitial);
 				
