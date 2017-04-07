@@ -42,9 +42,10 @@ public class OrderServiceImpl  implements OrderService{
 	private IngredientDAO ingredientDao;
 	
 	@Override
-	public Order newOrder(User user, Errors errors) {
+	public Order newOrder(Long userId, Errors errors) {
 		Order order = new Order();
-		order.setOrderOwner(user);
+		User user1 = this.userDao.findOne(userId);
+		order.setOrderOwner(user1);
 		Date date = new Date();
 		order.setOrderStartingDate(date);
 		order.setPrice(0.0f);

@@ -9,7 +9,7 @@ import com.jpinto.basedepizza.model.User;
 
 public interface OrderService {
 	
-	public Order newOrder(User user, Errors errors);
+	public Order newOrder(Long userId, Errors errors);
 	
 	public void addPizzaToOrder(Long orderId, Long pizzaId, List<Long> excludedIngredients, List<Long> extraIngredients, Errors errors); 
 	

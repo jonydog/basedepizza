@@ -45,11 +45,13 @@ public class OrderServiceTest extends PizzaPersistenceTest{
 	@Test
 	@Transactional
 	public void testNewOrder(){
-		User user = new User("Pedro", "pedro@email", "912345678", "passpedro");
+		Long userId = 1l;
 		
-		Order order = this.orderService.newOrder(user);
 		
-		Assert.assertTrue(this.orderDao.findOne(order.getId()).getOrderOwner().getId() == user.getId() );
+		Order order = new Order();
+		Errors errors = new BeanPropertyBindingResult(order, "order");
+		order = this.orderService.newOrder(userId, errors);
+		Assert.assertTrue(this.orderDao.findOne(order.getId()).getOrderOwner().getId() == userId );
 			
 	}
 	
@@ -58,9 +60,11 @@ public class OrderServiceTest extends PizzaPersistenceTest{
 	@Transactional
 	public void testAddPizzaToOrder(){
 		
-		User user = new User("Pedro", "pedro@email", "912345678", "passpedro");
+		Long userId = 1l;
 		
-		Order order = this.orderService.newOrder(user);
+		Order order = new Order();
+		Errors errors = new BeanPropertyBindingResult(order, "order");
+		order = this.orderService.newOrder(userId, errors);
 	
 		
 		List<Ingredient> ingredientList = new ArrayList<Ingredient>();
@@ -91,7 +95,7 @@ public class OrderServiceTest extends PizzaPersistenceTest{
 		excludedIngredients.add(3l);
 		List<Long> extraIngredients = new ArrayList<>();
 		extraIngredients.add(1L);
-		Errors errors = new BeanPropertyBindingResult(order, "order");
+		
 		
 		this.orderService.addPizzaToOrder(order.getId(), pizza.getId(), excludedIngredients, extraIngredients, errors);
 		
@@ -103,9 +107,11 @@ public class OrderServiceTest extends PizzaPersistenceTest{
 	@Test
 	@Transactional
 	public void testGetCurrentOrder(){
-		User user = new User("Pedro", "pedro@email", "912345678", "passpedro");
+		Long userId = 1l;
 		
-		Order order = this.orderService.newOrder(user);
+		Order order = new Order();
+		Errors errors = new BeanPropertyBindingResult(order, "order");
+		order = this.orderService.newOrder(userId, errors);
 		
 		Order orderResult= this.orderService.getCurrentOrder(order.getId());
 		
@@ -116,12 +122,13 @@ public class OrderServiceTest extends PizzaPersistenceTest{
 	@Test
 	@Transactional
 	public void testFinalizeOrder(){
-		User user = new User("Pedro", "pedro@email", "912345678", "passpedro");
+		Long userId = 1l;
 		
-		Order order = this.orderService.newOrder(user);
-		
+		Order order = new Order();
 		Errors errors = new BeanPropertyBindingResult(order, "order");
+		order = this.orderService.newOrder(userId, errors);
 		
+
 		this.orderService.finalizeOrder(order.getId(), errors);
 		
 		Assert.assertTrue(order.getFinished());
